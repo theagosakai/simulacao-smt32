@@ -172,6 +172,98 @@ document.querySelectorAll(".view-button").forEach((button) => {
     }
     applyTransform();
   });
+
+  const projects = [
+    {
+      name: "Estação de temperatura IoT",
+      level: "Iniciante", complexity: 2, price: 170, time: "2–3 sessões",
+      description: "Sensor, display e envio dos dados por Wi-Fi para uma página de monitoramento.",
+      components: ["DS18B20", "OLED 0.96", "ESP01", "STM32"]
+    },
+    {
+      name: "Controlador PWM de motor",
+      level: "Intermediário", complexity: 4, price: 280, time: "4–6 horas",
+      description: "Controle de velocidade de motor DC com ponte H, encoder e interface local.",
+      components: ["TB6612FNG", "Motor DC", "Encoder", "OLED"]
+    },
+    {
+      name: "Osciloscópio portátil",
+      level: "Avançado", complexity: 5, price: 420, time: "8–12 horas",
+      description: "Aquisição analógica rápida, trigger e desenho de formas de onda na tela TFT.",
+      components: ["TFT 2.4", "ADC DMA", "OPA2350", "STM32"]
+    },
+    {
+      name: "Automação de estufa",
+      level: "Intermediário", complexity: 3, price: 360, time: "6–8 horas",
+      description: "Controle de umidade, temperatura, ventilação, iluminação e bombas com logs.",
+      components: ["DHT22", "Relés", "RTC", "Bomba 5V"]
+    }
+  ];
+
+  const projectsSession = document.getElementById("projectsSession");
+  const budgetRange = document.getElementById("budgetRange");
+  const budgetLabel = document.getElementById("budgetLabel");
+  const projectGrid = document.getElementById("projectGrid");
+  const comparisonBody = document.getElementById("comparisonBody");
+  const comparisonCount = document.getElementById("comparisonCount");
+
+  function renderProjects() {
+    const budget = Number(budgetRange.value);
+    budgetLabel.textContent = budget >= 1000 ? "Até R$ 1.000+" : `Até R$ ${budget}`;
+    let visibleCount = 0;
+
+    projectGrid.innerHTML = projects.map((project) => {
+      const overBudget = project.price > budget;
+      if (!overBudget) visibleCount++;
+      const dots = Array.from({ length: 5 }, (_, index) =>
+        `<i class="${index < project.complexity ? "on" : ""}"></i>`).join("");
+      return `
+        <article class="project-card ${overBudget ? "over-budget" : ""}">
+          <div class="project-card-header">
+            <h3>${project.name}</h3>
+            <span class="project-level ${project.level.toLowerCase().replace("á","a")}">${project.level}</span>
+          </div>
+          <p>${project.description}</p>
+          <div class="project-components">${project.components.map((item) => `<span>${item}</span>`).join("")}</div>
+          <div class="project-footer">
+            <div class="project-price">R$ ${project.price}<small>estimativa de peças</small></div>
+            <div class="project-time">${project.time}<br>${dots ? `<span class="complex-bar">${dots}</span>` : ""}</div>
+          </div>
+        </article>`;
+    }).join("");
+
+    comparisonBody.innerHTML = projects.map((project) => {
+      const dots = Array.from({ length: 5 }, (_, index) =>
+        `<i class="${index < project.complexity ? "on" : ""}"></i>`).join("");
+      return `<tr>
+        <td><strong>${project.name}</strong></td>
+        <td>${project.level}</td>
+        <td><span class="complex-bar">${dots}</span></td>
+        <td>${project.time}</td>
+        <td>R$ ${project.price}–R$ ${project.price + 120}</td>
+      </tr>`;
+    }).join("");
+
+    comparisonCount.textContent = `${visibleCount} compatíveis · ${projects.length} opções`;
+  }
+
+  document.getElementById("projectsButton").addEventListener("click", () => {
+    projectsSession.classList.add("open");
+    projectsSession.setAttribute("aria-hidden", "false");
+    renderProjects();
+  });
+
+  function closeProjects() {
+    projectsSession.classList.remove("open");
+    projectsSession.setAttribute("aria-hidden", "true");
+  }
+
+  document.getElementById("projectsClose").addEventListener("click", closeProjects);
+  document.querySelector(".projects-backdrop").addEventListener("click", closeProjects);
+  budgetRange.addEventListener("input", renderProjects);
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeProjects();
+  });
 });
 
 viewport.addEventListener("pointerdown", (event) => {

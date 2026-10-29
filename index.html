@@ -48,6 +48,7 @@
             <button class="view-button" type="button" data-view="top">Topo</button>
             <button class="view-button" type="button" data-view="exploded">Explodida</button>
             <button class="view-button" type="button" data-view="pins">Pinos</button>
+            <button class="view-button" id="projectsButton" type="button">Projetos</button>
           </div>
           <div class="scene" id="scene">
             <div class="board">
@@ -129,6 +130,52 @@
         </aside>
       </section>
     </main>
+    <section class="projects-session" id="projectsSession" aria-hidden="true">
+      <div class="projects-backdrop"></div>
+      <div class="projects-panel">
+        <header class="projects-header">
+          <div>
+            <p class="eyebrow">IDEIAS PARA O LABORATÓRIO</p>
+            <h2>Sugestões de projetos</h2>
+          </div>
+          <button class="projects-close" id="projectsClose" type="button" aria-label="Fechar">×</button>
+        </header>
+
+        <div class="budget-bar">
+          <div>
+            <span>Faixa de investimento</span>
+            <strong id="budgetLabel">Até R$ 200</strong>
+          </div>
+          <input id="budgetRange" type="range" min="100" max="1000" step="50" value="200" />
+        </div>
+
+        <div class="project-grid" id="projectGrid"></div>
+
+        <section class="comparison-section">
+          <div class="comparison-heading">
+            <div>
+              <p class="eyebrow">COMPARAÇÃO TÉCNICA</p>
+              <h3>Escolha o próximo projeto</h3>
+            </div>
+            <span id="comparisonCount">4 opções</span>
+          </div>
+          <div class="comparison-table-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Projeto</th>
+                  <th>Nível</th>
+                  <th>Complexidade</th>
+                  <th>Tempo</th>
+                  <th>Faixa de preço</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
     <script src="app.js"></script>
   </body>
 </html>
