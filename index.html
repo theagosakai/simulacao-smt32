@@ -43,6 +43,12 @@
         </aside>
 
         <section class="viewport" id="viewport">
+          <div class="view-toolbar">
+            <button class="view-button active" type="button" data-view="3d">3D</button>
+            <button class="view-button" type="button" data-view="top">Topo</button>
+            <button class="view-button" type="button" data-view="exploded">Explodida</button>
+            <button class="view-button" type="button" data-view="pins">Pinos</button>
+          </div>
           <div class="scene" id="scene">
             <div class="board">
               <div class="board-edge edge-front"></div>
@@ -51,22 +57,27 @@
               <div class="pin-row pin-left" id="leftPins"></div>
               <div class="pin-row pin-right" id="rightPins"></div>
 
-              <div class="usb-port"><span></span></div>
+              <div class="inspectable usb-port" data-component="usb"><span></span></div>
 
-              <div class="mcu">
+              <div class="inspectable mcu" data-component="mcu">
                 <div class="mcu-mark">STM32</div>
                 <div class="mcu-model">F103C8<br />ARM</div>
                 <div class="dots"></div>
               </div>
 
-              <div class="crystal"><i></i><i></i></div>
+              <div class="inspectable crystal" data-component="crystal"><i></i><i></i></div>
+              <div class="regulator-area inspectable" data-component="regulator">
+                <div class="voltage-regulator">3.3</div>
+                <span class="capacitor cap-a"></span>
+                <span class="capacitor cap-b"></span>
+              </div>
 
-              <div class="led led-green" id="greenLed"></div>
-              <div class="led led-red" id="redLed"></div>
+              <div class="inspectable led led-green" data-component="led-green" id="greenLed"></div>
+              <div class="inspectable led led-red" data-component="led-red" id="redLed"></div>
               <div class="led-label">PWR</div>
 
-              <div class="board-button user-button" title="USER"></div>
-              <div class="board-button reset-button" title="RST"></div>
+              <div class="inspectable board-button user-button" data-component="button-user" title="USER"></div>
+              <div class="inspectable board-button reset-button" data-component="button-reset" title="RST"></div>
 
               <div class="silkscreen screen-top">BLUE PILL</div>
               <div class="silkscreen screen-bottom">STM32 DEVELOPMENT BOARD</div>
@@ -79,12 +90,42 @@
           <div class="hint">Arraste para girar · Scroll para zoom</div>
         </section>
 
-        <aside class="panel monitor">
-          <h2>Monitor serial</h2>
-          <div class="terminal" id="terminal">
-            <div class="terminal-line muted">STM32F103 bootloader ready</div>
+        <aside class="panel inspector">
+          <div class="inspector-header">
+            <h2>Inspecao</h2>
+            <span class="part-id" id="partId">MCU-01</span>
           </div>
-          <button id="clearLog" class="clear-button" type="button">Limpar console</button>
+          <div id="componentPreview" class="component-preview">
+            <div class="chip-preview">STM32</div>
+          </div>
+          <div class="component-info">
+            <p class="component-type" id="componentType">MICROCONTROLADOR</p>
+            <h3 id="componentName">STM32F103C8T6</h3>
+            <p id="componentDescription">CPU ARM Cortex-M3, núcleo de 32 bits executando até 72 MHz.</p>
+          </div>
+          <dl class="component-specs" id="componentSpecs">
+            <div><dt>Núcleo</dt><dd>Cortex-M3</dd></div>
+            <div><dt>Memória Flash</dt><dd>64 KB</dd></div>
+            <div><dt>SRAM</dt><dd>20 KB</dd></div>
+            <div><dt>Tensão</dt><dd>2.0–3.6 V</dd></div>
+          </dl>
+          <div class="pinout-section">
+            <h3>Mapa de pinos</h3>
+            <div class="pin-list" id="pinList">
+              <button type="button" data-pin="PA0">PA0 <span>ADC</span></button>
+              <button type="button" data-pin="PA13">PA13 <span>SWDIO</span></button>
+              <button type="button" data-pin="PA14">PA14 <span>SWCLK</span></button>
+              <button type="button" data-pin="PC13">PC13 <span>LED</span></button>
+              <button type="button" data-pin="GND">GND <span>0 V</span></button>
+            </div>
+          </div>
+          <div class="terminal-mini">
+            <h3>Terminal</h3>
+            <div class="terminal" id="terminal">
+              <div class="terminal-line muted">STM32F103 bootloader ready</div>
+            </div>
+            <button id="clearLog" class="clear-button" type="button">Limpar console</button>
+          </div>
         </aside>
       </section>
     </main>
