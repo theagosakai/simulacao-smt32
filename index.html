@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STM32 3D Simulator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">EMBEDDED LAB</p>
+          <h1>STM32F103C8T6</h1>
+        </div>
+        <div class="status"><span></span> SIMULADOR ATIVO</div>
+      </header>
+
+      <section class="workspace">
+        <aside class="panel controls">
+          <h2>Controles</h2>
+
+          <label>
+            Potenciometro ADC
+            <output id="adcValue">50%</output>
+          </label>
+          <input id="adcSlider" type="range" min="0" max="100" value="50" />
+
+          <div class="button-row">
+            <button id="buttonUser" class="push-button" type="button">USER</button>
+            <button id="buttonReset" class="push-button reset" type="button">RST</button>
+          </div>
+
+          <button id="powerButton" class="power-button" type="button">
+            <span class="power-icon">⏻</span> Alimentar placa
+          </button>
+
+          <div class="metrics">
+            <div><span>VDD</span><strong id="vdd">3.30 V</strong></div>
+            <div><span>SYSCLK</span><strong>72 MHz</strong></div>
+            <div><span>PA0</span><strong id="pa0">1.650 V</strong></div>
+          </div>
+        </aside>
+
+        <section class="viewport" id="viewport">
+          <div class="scene" id="scene">
+            <div class="board">
+              <div class="board-edge edge-front"></div>
+              <div class="board-edge edge-right"></div>
+
+              <div class="pin-row pin-left" id="leftPins"></div>
+              <div class="pin-row pin-right" id="rightPins"></div>
+
+              <div class="usb-port"><span></span></div>
+
+              <div class="mcu">
+                <div class="mcu-mark">STM32</div>
+                <div class="mcu-model">F103C8<br />ARM</div>
+                <div class="dots"></div>
+              </div>
+
+              <div class="crystal"><i></i><i></i></div>
+
+              <div class="led led-green" id="greenLed"></div>
+              <div class="led led-red" id="redLed"></div>
+              <div class="led-label">PWR</div>
+
+              <div class="board-button user-button" title="USER"></div>
+              <div class="board-button reset-button" title="RST"></div>
+
+              <div class="silkscreen screen-top">BLUE PILL</div>
+              <div class="silkscreen screen-bottom">STM32 DEVELOPMENT BOARD</div>
+
+              <div class="holes">
+                <i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+          </div>
+          <div class="hint">Arraste para girar · Scroll para zoom</div>
+        </section>
+
+        <aside class="panel monitor">
+          <h2>Monitor serial</h2>
+          <div class="terminal" id="terminal">
+            <div class="terminal-line muted">STM32F103 bootloader ready</div>
+          </div>
+          <button id="clearLog" class="clear-button" type="button">Limpar console</button>
+        </aside>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
